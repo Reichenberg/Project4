@@ -1,1 +1,2 @@
 c:\users\chance\documents\visual studio 2013\Projects\SupermarketSimulation\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
