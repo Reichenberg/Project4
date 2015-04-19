@@ -33,5 +33,34 @@ namespace SupermarketSimulation
         {
             InitializeComponent();
         }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            int NumCustomers = int.Parse(txtCustomers.Text);
+            int HoursOfOperation = int.Parse(txtHours.Text);
+            int NumRegisters = int.Parse(txtRegisters.Text);
+        }
+
+        private double ExponentialNum(int UniformRand, int RateParameter)
+        {
+            return Math.Log(1 - UniformRand) / (-RateParameter);
+        }
+
+        private int PoissonNum(int lambda, Random R)
+        {
+            double L = Math.Exp(-lambda);
+            int k = 0;
+            double p = 1;
+            do
+            {
+                k = k + 1;
+                double u = R.Next();
+                p = p * u;
+            } while (p > L);
+            return k - 1;
+        }
+    
+    
     }
+
 }

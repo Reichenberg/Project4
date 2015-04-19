@@ -118,6 +118,7 @@
             this.btnRun.TabIndex = 8;
             this.btnRun.Text = "Run Simulation";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // btnClose
             // 
@@ -177,7 +178,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 312);
+            this.ClientSize = new System.Drawing.Size(734, 311);
             this.Controls.Add(this.lblLongestQueue);
             this.Controls.Add(this.lblEvents);
             this.Controls.Add(this.lblDepartures);

@@ -14,17 +14,17 @@ namespace SupermarketSimulation
         /// <summary>
         /// Unique ID for customer
         /// </summary>
-        int CustomerID { get; private set; }
+        public int CustomerID { get; private set; }
 
         /// <summary>
         /// Time of Arrival of customer
         /// </summary>
-        double ArrivalTime { get; private set; }
+        public double ArrivalTime { get; private set; }
 
         /// <summary>
         /// Time required to serve customer 
         /// </summary>
-        double TimeToServe { get; private set; }
+        public double TimeToServe { get; private set; }
 
         /// <summary>
         /// default constructor for Customer class
