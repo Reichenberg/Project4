@@ -1,13 +1,4 @@
 c:\users\chance\documents\visual studio 2013\Projects\SupermarketSimulation\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.pdb
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.csprojResolveAssemblyReference.cache
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.frmSimInterface.resources
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.Properties.Resources.resources
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.csproj.GenerateResource.Cache
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.exe
-C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.pdb
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.exe
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.pdb
@@ -17,3 +8,14 @@ C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\obj\Debug\Superm
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.csproj.GenerateResource.Cache
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe
 C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.pdb
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.csprojResolveAssemblyReference.cache
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.frmSimInterface.resources
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.Properties.Resources.resources
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.csproj.GenerateResource.Cache
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe.config
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.exe
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\SupermarketSimulation.pdb
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUtility.dll
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUtility.pdb
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.exe
+C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.pdb

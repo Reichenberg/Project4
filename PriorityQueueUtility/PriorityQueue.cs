@@ -20,7 +20,7 @@ namespace PriorityQueueUtility
     /// <summary>
     /// Pritority Queue class used for handling data
     /// </summary>
-    public class PriorityQueue<T> : IPriorityQueue<T> where T: IComparable
+    public class PriorityQueue<T> : IPriorityQueue<T> where T: IComparable<T>
     {
         private Node<T> top;
 
@@ -111,6 +111,8 @@ namespace PriorityQueueUtility
         {
             return Count == 0;
         }
+
+
     }
 
 

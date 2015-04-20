@@ -25,11 +25,11 @@ namespace SupermarketSimulation
     /// <summary>
     /// Class used to handle events that happen to patrons
     /// </summary>
-    class Event : IComparable
+    class Event : IComparable<Event>
     {
         public EVENTTYPE Type { get; set; }
-        public DateTime Time { get; set; }
-        public int Patron { get; set; }
+
+        public Customer Customer { get; set; }
 
         /// <summary>
         /// Defuault constructor for Event class
@@ -37,8 +37,7 @@ namespace SupermarketSimulation
         public Event()
         {
             Type = EVENTTYPE.ENTER;
-            Time = DateTime.Now;
-            Patron = -1;
+            Customer = new Customer();
         }
 
         /// <summary>
@@ -47,11 +46,10 @@ namespace SupermarketSimulation
         /// <param name="type">type of the event</param>
         /// <param name="time">Time of the event</param>
         /// <param name="patron">Who the event happened to</param>
-        public Event(EVENTTYPE type, DateTime time, int patron)
+        public Event(EVENTTYPE type,Customer cust)
         {
             Type = type;
-            Time = time;
-            Patron = patron;
+            Customer = cust;
         }
 
         /// <summary>
@@ -59,14 +57,14 @@ namespace SupermarketSimulation
         /// </summary>
         /// <param name="obj">Object to compare</param>
         /// <returns>Comparison value</returns>
-        public int CompareTo(Object obj)
+         public int CompareTo(Event obj)
         {
             if(!(obj is Event))
             {
                 throw new ArgumentException("The argument is not an Event object.");
             }
             Event e = (Event)obj;
-            return (e.Time.CompareTo(Time));
+            return (e.Customer.ArrivalTime.CompareTo(Customer.ArrivalTime));
         }
     }
 }

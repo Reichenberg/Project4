@@ -61,6 +61,7 @@
             this.txtCustomers.Name = "txtCustomers";
             this.txtCustomers.Size = new System.Drawing.Size(100, 20);
             this.txtCustomers.TabIndex = 1;
+            this.txtCustomers.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // label2
             // 
@@ -95,6 +96,7 @@
             this.txtHours.Name = "txtHours";
             this.txtHours.Size = new System.Drawing.Size(100, 20);
             this.txtHours.TabIndex = 5;
+            this.txtHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // txtRegisters
             // 
@@ -102,6 +104,7 @@
             this.txtRegisters.Name = "txtRegisters";
             this.txtRegisters.Size = new System.Drawing.Size(100, 20);
             this.txtRegisters.TabIndex = 6;
+            this.txtRegisters.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // txtCheckoutDuration
             // 
@@ -109,6 +112,7 @@
             this.txtCheckoutDuration.Name = "txtCheckoutDuration";
             this.txtCheckoutDuration.Size = new System.Drawing.Size(100, 20);
             this.txtCheckoutDuration.TabIndex = 7;
+            this.txtCheckoutDuration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // btnRun
             // 
@@ -128,6 +132,7 @@
             this.btnClose.TabIndex = 9;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // txtSimulationVisual
             // 
@@ -178,7 +183,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.ClientSize = new System.Drawing.Size(734, 312);
             this.Controls.Add(this.lblLongestQueue);
             this.Controls.Add(this.lblEvents);
             this.Controls.Add(this.lblDepartures);

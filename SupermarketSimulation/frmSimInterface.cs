@@ -34,6 +34,7 @@ namespace SupermarketSimulation
         int numCustomers = 0;
         int hoursOfOperation = 0;
         int numRegisters = 0;
+        double expectedCheckoutDuration = 6.25;
 
         /// <summary>
         /// Default constructor for the form
@@ -50,9 +51,10 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
-             numCustomers = int.Parse(txtCustomers.Text);
+             numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
              hoursOfOperation = int.Parse(txtHours.Text);
              numRegisters = int.Parse(txtRegisters.Text);
+             GenerateCustomerEvents();
         }
 
         /// <summary>
@@ -86,9 +88,41 @@ namespace SupermarketSimulation
         /// <summary>
         /// Method to generate customer events
         /// </summary>
-        private void GenerateCustomers()
+        private void GenerateCustomerEvents()
         {
+            for(int i = 0; i < numCustomers; i++)
+            {
+                Customer tempCust = new Customer(i + 1, new TimeSpan(0, rand.Next(hoursOfOperation * 60), 0), new TimeSpan(0, (int)(2 + NegExponentialNum(expectedCheckoutDuration)), 0));
+                PQ.Enqueue(new Event(EVENTTYPE.ENTER, tempCust));
+            }
+        }
 
+        /// <summary>
+        /// Validates data entered into text boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KeyValidation_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //If the base is less than 10 only allow characters that are less than the base to be entered. If the base is 10 or greater allow 0-9 to be entered
+            if ((e.KeyChar >= '0' && e.KeyChar <= '9') || e.KeyChar == (char)Keys.Back)
+            {
+                return;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the close button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     
     

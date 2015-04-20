@@ -21,7 +21,7 @@ namespace PriorityQueueUtility
     /// Node class for the nodes in the priority queue
     /// </summary>
     /// <typeparam name="T">Item type to be held in the node</typeparam>
-    private class Node<T>
+     class Node<T>
     {
         public T Item { get; set; }
         public Node<T> Next { get; set; }
