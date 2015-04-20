@@ -28,6 +28,11 @@ namespace SupermarketSimulation
         public int CustomerID { get; private set; }
 
         /// <summary>
+        /// Variable for maintaining time spent waiting in the register's line 
+        /// </summary>
+        public double TimeWaiting { get; set; }
+
+        /// <summary>
         /// Time of Arrival of customer
         /// </summary>
         public TimeSpan ArrivalTime { get; private set; }

@@ -19,3 +19,5 @@ C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUt
 C:\Users\Chance\Desktop\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUtility.pdb
 C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.exe
 C:\Users\Chance\Desktop\Project4\SupermarketSimulation\obj\Debug\SupermarketSimulation.pdb
+C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUtility.dll
+C:\Users\Duncan\Documents\GitHub\Project4\SupermarketSimulation\bin\Debug\PriorityQueueUtility.pdb

@@ -31,6 +31,8 @@ namespace SupermarketSimulation
 
         public Customer Customer { get; set; }
 
+        public TimeSpan EventTime { get; set; }
+
         /// <summary>
         /// Defuault constructor for Event class
         /// </summary>
@@ -46,10 +48,11 @@ namespace SupermarketSimulation
         /// <param name="type">type of the event</param>
         /// <param name="time">Time of the event</param>
         /// <param name="patron">Who the event happened to</param>
-        public Event(EVENTTYPE type,Customer cust)
+        public Event(EVENTTYPE type,Customer cust, TimeSpan time)
         {
             Type = type;
             Customer = cust;
+            EventTime = time;
         }
 
         /// <summary>
@@ -64,7 +67,7 @@ namespace SupermarketSimulation
                 throw new ArgumentException("The argument is not an Event object.");
             }
             Event e = (Event)obj;
-            return (e.Customer.ArrivalTime.CompareTo(Customer.ArrivalTime));
+            return (e.EventTime.CompareTo(EventTime));
         }
     }
 }
