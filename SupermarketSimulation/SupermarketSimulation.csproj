@@ -79,7 +79,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PriorityQueueUtility\PriorityQueueUtility.csproj">
+      <Project>{5fe727f5-3575-41ab-a235-6861db158296}</Project>
+      <Name>PriorityQueueUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\favicon.ico" />
   </ItemGroup>

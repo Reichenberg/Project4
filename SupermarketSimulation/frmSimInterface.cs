@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PriorityQueueUtility;
 
 namespace SupermarketSimulation
 {
@@ -28,6 +29,12 @@ namespace SupermarketSimulation
     {
 
         Random rand = new Random();
+        PriorityQueue<Event> PQ = new PriorityQueue<Event>();
+        int maximumLineLength = 0;
+        int numCustomers = 0;
+        int hoursOfOperation = 0;
+        int numRegisters = 0;
+
         /// <summary>
         /// Default constructor for the form
         /// </summary>
@@ -43,9 +50,9 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
-            int NumCustomers = int.Parse(txtCustomers.Text);
-            int HoursOfOperation = int.Parse(txtHours.Text);
-            int NumRegisters = int.Parse(txtRegisters.Text);
+             numCustomers = int.Parse(txtCustomers.Text);
+             hoursOfOperation = int.Parse(txtHours.Text);
+             numRegisters = int.Parse(txtRegisters.Text);
         }
 
         /// <summary>
@@ -74,6 +81,14 @@ namespace SupermarketSimulation
                 dSum += Math.Log(rand.NextDouble());
             }
             return count;
+        }
+
+        /// <summary>
+        /// Method to generate customer events
+        /// </summary>
+        private void GenerateCustomers()
+        {
+
         }
     
     
