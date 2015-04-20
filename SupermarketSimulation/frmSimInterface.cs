@@ -30,6 +30,7 @@ namespace SupermarketSimulation
 
         Random rand = new Random();
         PriorityQueue<Event> PQ = new PriorityQueue<Event>();
+        List<Queue<Customer>> registers;
         int maximumLineLength = 0;
         int numCustomers = 0;
         int hoursOfOperation = 0;
@@ -54,7 +55,15 @@ namespace SupermarketSimulation
              numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
              hoursOfOperation = int.Parse(txtHours.Text);
              numRegisters = int.Parse(txtRegisters.Text);
-             GenerateCustomerEvents();
+             expectedCheckoutDuration = Double.Parse(txtCheckoutDuration.Text);
+
+             registers = new List<Queue<Customer>>();
+             for (int count = 0; count < numRegisters; count++ )
+             {
+                 registers.Add(new Queue<Customer>());
+             }
+                 GenerateCustomerArrivals();
+             RunSimulation();
         }
 
         /// <summary>
@@ -88,12 +97,38 @@ namespace SupermarketSimulation
         /// <summary>
         /// Method to generate customer events
         /// </summary>
-        private void GenerateCustomerEvents()
+        private void GenerateCustomerArrivals()
         {
             for(int i = 0; i < numCustomers; i++)
             {
                 Customer tempCust = new Customer(i + 1, new TimeSpan(0, rand.Next(hoursOfOperation * 60), 0), new TimeSpan(0, (int)(2 + NegExponentialNum(expectedCheckoutDuration)), 0));
                 PQ.Enqueue(new Event(EVENTTYPE.ENTER, tempCust));
+            }
+        }
+
+        /// <summary>
+        /// Method that runs the Supermarket Simulation
+        /// </summary>
+        private void RunSimulation()
+        {
+            while(PQ.Count != 0)
+            {
+                int shortestLineIndex = 0;
+                int lineLength = registers[0].Count;
+                Event tempEvent = PQ.Peek();
+
+                if(tempEvent.Type == EVENTTYPE.ENTER)
+                {
+                    //Gets the index of the shortest line to be checked out
+                    for(int i = 0; i < registers.Count; i++)
+                    {
+                        shortestLineIndex = (registers[i].Count < lineLength) ? i : shortestLineIndex;
+                    }
+                    registers[shortestLineIndex].Enqueue(tempEvent.Customer);   //Add the customer to the shortest line
+                    PQ.Dequeue();       //Then remove that customer's arrival from the priority Queue
+                }
+
+                
             }
         }
 
