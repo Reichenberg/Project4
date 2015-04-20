@@ -26,6 +26,8 @@ namespace SupermarketSimulation
     /// </summary>
     public partial class frmSimInterface : Form
     {
+
+        Random rand = new Random();
         /// <summary>
         /// Default constructor for the form
         /// </summary>
@@ -34,6 +36,11 @@ namespace SupermarketSimulation
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Button click event method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
             int NumCustomers = int.Parse(txtCustomers.Text);
@@ -41,23 +48,32 @@ namespace SupermarketSimulation
             int NumRegisters = int.Parse(txtRegisters.Text);
         }
 
-        private double ExponentialNum(int UniformRand, int RateParameter)
+        /// <summary>
+        /// Negative exponential distribution generator method
+        /// </summary>
+        /// <param name="expectedValue">Value used to generate Negative exponential value</param>
+        /// <returns>Negative exponential number</returns>
+        private double NegExponentialNum(double expectedValue)
         {
-            return Math.Log(1 - UniformRand) / (-RateParameter);
+            return -expectedValue * Math.Log(rand.NextDouble());
         }
 
-        private int PoissonNum(int lambda, Random R)
+        /// <summary>
+        /// Poisson distribution number generator method
+        /// </summary>
+        /// <param name="expectedValue">value used to generate the numbers around</param>
+        /// <returns>poisson distribution value</returns>
+        private int PoissonNum(double expectedValue)
         {
-            double L = Math.Exp(-lambda);
-            int k = 0;
-            double p = 1;
-            do
+            double dLimit = -expectedValue;
+            double dSum = Math.Log(rand.NextDouble());
+
+            int count;
+            for(count = 0; dSum > dLimit; count++)
             {
-                k = k + 1;
-                double u = R.Next();
-                p = p * u;
-            } while (p > L);
-            return k - 1;
+                dSum += Math.Log(rand.NextDouble());
+            }
+            return count;
         }
     
     
