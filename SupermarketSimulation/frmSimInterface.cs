@@ -4,7 +4,7 @@
 //	File Name:		frmSimInterface.cs
 //	Description:    Gui for the supermarket simulation
 //	Course:			CSCI 2210-001 - Data Structures
-//	Author:			Chance Reichenberg, reichenberg@etsu.edu, Department of Computing, East Tennessee State University
+//	Author:			Chance Reichenberg, reichenberg@etsu.edu, Duncan Perkins, perkinsdt@goldmail.etsu.edu, Department of Computing, East Tennessee State University
 //	Created:	    Friday, April 10, 2015
 //	Copyright:		Chance Reichenberg, 2015
 //
@@ -35,6 +35,7 @@ namespace SupermarketSimulation
         int numCustomers = 0;
         int hoursOfOperation = 0;
         int numRegisters = 0;
+        int eventsProcessed;
         double expectedCheckoutDuration = 6.25;
         double[] WaitingTime; 
 
@@ -53,6 +54,7 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
+            eventsProcessed = 0;
              numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
              hoursOfOperation = int.Parse(txtHours.Text);
              numRegisters = int.Parse(txtRegisters.Text);
@@ -172,7 +174,9 @@ namespace SupermarketSimulation
                 //PQ.Enqueue(new Event(EVENTTYPE.LEAVE, registers[leaveIndex].Peek(),exitTime));
                 //registers[leaveIndex].Dequeue();
 
-
+                eventsProcessed += 1;
+                lblEvents.Text = eventsProcessed.ToString();
+                Task.Delay(10000);
 
             }
         }
