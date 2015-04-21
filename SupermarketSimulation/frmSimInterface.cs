@@ -219,6 +219,7 @@ namespace SupermarketSimulation
         public async Task<int> VisualizeData()
         {
             string str = "";
+            string tempstr = "";
             int biggest = 0;
             List<Queue<Customer>> RegisterCopy = new List<Queue<Customer>>();
             foreach (Queue<Customer> q in registers)
@@ -228,7 +229,11 @@ namespace SupermarketSimulation
             str += "Registers\r\n---------\r\n";
             for (int i = 0; i < registers.Count; i++)
             {
-                str += "R " + i + "        ";
+                if (i > 0)
+                    tempstr += "   ";
+                tempstr = "|--R " + i + "--|  "  ;
+                tempstr.PadLeft(5);
+                str += tempstr; 
             }
             str += "\r\n";
 
@@ -246,12 +251,15 @@ namespace SupermarketSimulation
                 {
                     if (q.Count > 0)
                     {
-                        str += q.Dequeue().CustomerID + "    ";
+                        tempstr = " " + q.Dequeue().CustomerID.ToString() + "    ";
+                        str+=tempstr;
+
                     }
 
                     else
                     {
-                        str += "           ";
+                        str += "     ";
+
                     }
 
                 }

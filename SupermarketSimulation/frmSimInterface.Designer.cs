@@ -149,8 +149,10 @@
             this.txtSimulationVisual.Multiline = true;
             this.txtSimulationVisual.Name = "txtSimulationVisual";
             this.txtSimulationVisual.ReadOnly = true;
+            this.txtSimulationVisual.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.txtSimulationVisual.Size = new System.Drawing.Size(364, 165);
             this.txtSimulationVisual.TabIndex = 10;
+            this.txtSimulationVisual.WordWrap = false;
             // 
             // lblArrivals
             // 
