@@ -6,7 +6,7 @@
 //	Course:			CSCI 2210-001 - Data Structures
 //	Author:			Chance Reichenberg, reichenberg@etsu.edu, Duncan Perkins, perkinsdt@goldmail.etsu.edu, Department of Computing, East Tennessee State University
 //	Created:	    Friday, April 10, 2015
-//	Copyright:		Chance Reichenberg, 2015
+//	Copyright:		Duncan Perkins, Chance Reichenberg, 2015
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
@@ -40,12 +40,14 @@ namespace SupermarketSimulation
         int numRegisters = 5;
         int expectedCheckoutDurationMin = 6;
         int expectedCheckoutDurationSeconds = 15;
+        bool threadFinished = false;
+        System.Timers.Timer timer; 
 
         //Statistics variables
         int eventsProcessed, arrivals, departures;
         int longestQueue = 0;
         TimeSpan shortestServiceTime, longestServiceTime, averageServiceTime, totalServiceTime;
-
+        string TxtOutput = "Registers\r\n---------\r\n\r\n"; 
         TimeSpan[] WaitingTime;
         
 
@@ -55,6 +57,7 @@ namespace SupermarketSimulation
         public frmSimInterface()
         {
             InitializeComponent();
+            timer = new System.Timers.Timer();
         }
 
         /// <summary>
@@ -83,6 +86,10 @@ namespace SupermarketSimulation
                  GenerateCustomerArrivals();
              RunSimulation();
              
+        }
+
+        private void ToTextString(List<Queue<Customer>> List) { 
+
         }
 
         /// <summary>
@@ -128,7 +135,7 @@ namespace SupermarketSimulation
         /// <summary>
         /// Method that runs the Supermarket Simulation
         /// </summary>
-        private void RunSimulation()
+        private async void RunSimulation()
         {
             shortestServiceTime = PQ.Peek().Customer.TimeToServe;
             longestServiceTime = PQ.Peek().Customer.TimeToServe;
@@ -156,7 +163,7 @@ namespace SupermarketSimulation
 
                     TimeSpan custExitTime = tempEvent.Customer.ArrivalTime + tempEvent.Customer.TimeToServe;
 
-                    //If the customer's wait time is less than the shortest wait time, then set it to be the shotest wait time.
+                    //If the customer's wait time is less than the shortest wait time, then set it to be the shortest wait time.
                     shortestServiceTime = (tempEvent.Customer.TimeToServe < shortestServiceTime) ? tempEvent.Customer.TimeToServe : shortestServiceTime;
                     //If the customer's wait time is longer than the longest wait time, then set it to be the longest wait time.
                     longestServiceTime = (tempEvent.Customer.TimeToServe > longestServiceTime) ? tempEvent.Customer.TimeToServe : longestServiceTime;
@@ -201,10 +208,7 @@ namespace SupermarketSimulation
                 eventsProcessed++;
                 lblEvents.Text = String.Format("Events Processed: {0}",eventsProcessed.ToString());
                 GetLongestQueue();
-
-                //Replace 1000 with a variable from a slider control
-                Task.Delay(100).Wait();
-
+                txtSimulationVisual.Text = await DisplayRegisters();
             }
 
             averageServiceTime = new TimeSpan(0, (int)(totalServiceTime.TotalMinutes / numCustomers), 0);
@@ -275,6 +279,31 @@ namespace SupermarketSimulation
             lblShortestWait.Text = "Shortest Wait: " ;
             lblLongestWait.Text = "Longest Wait: ";
         }
+
+        public async Task<string> DisplayRegisters()
+        {
+            string str = "";
+            List<List<Customer>> ToList = new List<List<Customer>>();
+            int i = 0;
+            foreach(Queue<Customer> q in registers)
+            {
+                ToList[i] = new List<Customer>(registers[i]);
+                i++;
+            }
+
+            for (int j = 0; j <= ToList[0].Count; j++)
+            {
+                foreach (List<Customer> l in ToList)
+                {
+                    str += "R " + j + 1 + "\r\n";
+                    str += l[j].CustomerID + "         ";
+                }
+                str += "\r\n";
+            }
+            await Task.Delay(1000);
+            return str;
+        }
+
     
     
     }
