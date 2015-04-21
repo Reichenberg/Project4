@@ -150,22 +150,23 @@ namespace SupermarketSimulation
 
                     //Sets the current waiting time to the total amoumt of time for
                     //each person to make it through the line
-                    WaitingTime[shortestLineIndex] += tempEvent.Customer.TimeToServe;
-                    tempEvent.Customer.TimeWaiting = WaitingTime[shortestLineIndex];        //Sets the customer's time needed to wait to that total waiting time
+                    //WaitingTime[shortestLineIndex] += tempEvent.Customer.TimeToServe;
+                    //tempEvent.Customer.TimeWaiting = WaitingTime[shortestLineIndex];        //Sets the customer's time needed to wait to that total waiting time
                     registers[shortestLineIndex].Enqueue(tempEvent.Customer);               //Add the customer to the shortest line
 
-                    TimeSpan custExitTime = tempEvent.Customer.ArrivalTime + tempEvent.Customer.TimeWaiting;
+                    TimeSpan custExitTime = tempEvent.Customer.ArrivalTime + tempEvent.Customer.TimeToServe;
 
                     //If the customer's wait time is less than the shortest wait time, then set it to be the shotest wait time.
-                    shortestServiceTime = (tempEvent.Customer.TimeWaiting < shortestServiceTime) ? tempEvent.Customer.TimeWaiting : shortestServiceTime;
+                    shortestServiceTime = (tempEvent.Customer.TimeToServe < shortestServiceTime) ? tempEvent.Customer.TimeToServe : shortestServiceTime;
                     //If the customer's wait time is longer than the longest wait time, then set it to be the longest wait time.
-                    longestServiceTime = (tempEvent.Customer.TimeWaiting > longestServiceTime) ? tempEvent.Customer.TimeWaiting : longestServiceTime;
+                    longestServiceTime = (tempEvent.Customer.TimeToServe > longestServiceTime) ? tempEvent.Customer.TimeToServe : longestServiceTime;
 
                     //Add the customer's wait time to the total service time
-                    totalServiceTime += tempEvent.Customer.TimeWaiting;
+                    totalServiceTime += tempEvent.Customer.TimeToServe;
 
-                    PQ.Enqueue(new Event(EVENTTYPE.LEAVE, tempEvent.Customer, custExitTime));
                     PQ.Dequeue();       //Then remove that customer's arrival from the priority Queue
+                    PQ.Enqueue(new Event(EVENTTYPE.LEAVE, tempEvent.Customer, custExitTime));
+                    
                     arrivals++;         //Increment Arrivals
                     lblArrivals.Text = String.Format("Arrivals: {0}", arrivals.ToString());
                 }
@@ -179,7 +180,7 @@ namespace SupermarketSimulation
                             if (registers[count].Peek().CustomerID == tempEvent.Customer.CustomerID)
                             {
                                 //Subtract the customer to be dequeued's TimeToServe from the Waiting time for that line
-                                WaitingTime[count] -= registers[count].Peek().TimeToServe;
+                                //WaitingTime[count] -= registers[count].Peek().TimeToServe;
                                 registers[count].Dequeue();     //Remove the customer from that line
                             }
                         }
@@ -188,6 +189,15 @@ namespace SupermarketSimulation
                     lblDepartures.Text = String.Format("Departures: {0}", departures.ToString());
                 }
                 
+                //for(int i = 0 ; i < registers.Count; i++)
+                //{
+                //    txtSimulationVisual.Text += "R" + i+ 1;
+                //}
+                //txtSimulationVisual.Text += "\n";
+                //for (int i = 0; i < registers.Count; i++)
+                //{
+                //    txtSimulationVisual.Text += registers[i].
+                //}
                 eventsProcessed++;
                 lblEvents.Text = String.Format("Events Processed: {0}",eventsProcessed.ToString());
                 GetLongestQueue();
