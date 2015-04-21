@@ -29,15 +29,25 @@ namespace SupermarketSimulation
     {
 
         Random rand = new Random();
+        //Priority Queue to manage events
         PriorityQueue<Event> PQ = new PriorityQueue<Event>();
+        //List of queues to represent registers
         List<Queue<Customer>> registers;
-        int maximumLineLength = 0;
-        int numCustomers = 0;
-        int hoursOfOperation = 0;
-        int numRegisters = 0;
-        int eventsProcessed;
-        double expectedCheckoutDuration = 6.25;
-        double[] WaitingTime; 
+
+        //Variables to base simulation on
+        int numCustomers = 600;
+        int hoursOfOperation = 16;
+        int numRegisters = 5;
+        int expectedCheckoutDurationMin = 6;
+        int expectedCheckoutDurationSeconds = 15;
+
+        //Statistics variables
+        int eventsProcessed, arrivals, departures;
+        int longestQueue = 0;
+        TimeSpan shortestServiceTime, longestServiceTime, averageServiceTime, totalServiceTime;
+
+        TimeSpan[] WaitingTime;
+        
 
         /// <summary>
         /// Default constructor for the form
@@ -54,20 +64,25 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
-            eventsProcessed = 0;
+            ResetStats();
+
              numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
              hoursOfOperation = int.Parse(txtHours.Text);
              numRegisters = int.Parse(txtRegisters.Text);
-             WaitingTime = new double[numRegisters];
-             expectedCheckoutDuration = Double.Parse(txtCheckoutDuration.Text);
+             WaitingTime = new TimeSpan[numRegisters];
+             expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
+             expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
 
              registers = new List<Queue<Customer>>();
+
+            //Adds a Queue to the list for each register
              for (int count = 0; count < numRegisters; count++ )
              {
                  registers.Add(new Queue<Customer>());
              }
                  GenerateCustomerArrivals();
              RunSimulation();
+             
         }
 
         /// <summary>
@@ -105,7 +120,7 @@ namespace SupermarketSimulation
         {
             for(int i = 0; i < numCustomers; i++)
             {
-                Customer tempCust = new Customer(i + 1, new TimeSpan(0, rand.Next(hoursOfOperation * 60), 0), new TimeSpan(0, (int)(2 + NegExponentialNum(expectedCheckoutDuration)), 0));
+                Customer tempCust = new Customer(i + 1, new TimeSpan(0, rand.Next(hoursOfOperation * 60), 0), new TimeSpan(0, (int)(2 + NegExponentialNum(expectedCheckoutDurationMin)), (int)(0 + NegExponentialNum(expectedCheckoutDurationSeconds))));
                 PQ.Enqueue(new Event(EVENTTYPE.ENTER, tempCust, tempCust.ArrivalTime));
             }
         }
@@ -115,6 +130,8 @@ namespace SupermarketSimulation
         /// </summary>
         private void RunSimulation()
         {
+            shortestServiceTime = PQ.Peek().Customer.TimeToServe;
+            longestServiceTime = PQ.Peek().Customer.TimeToServe;
             while(PQ.Count != 0)
             {
                 int shortestLineIndex = 0;
@@ -129,19 +146,28 @@ namespace SupermarketSimulation
                     for(int i = 0; i < registers.Count; i++)
                     {
                         shortestLineIndex = (registers[i].Count < lineLength) ? i : shortestLineIndex;
-
                     }
 
                     //Sets the current waiting time to the total amoumt of time for
                     //each person to make it through the line
-                    WaitingTime[shortestLineIndex] += tempEvent.Customer.TimeToServe.TotalMinutes;
+                    WaitingTime[shortestLineIndex] += tempEvent.Customer.TimeToServe;
                     tempEvent.Customer.TimeWaiting = WaitingTime[shortestLineIndex];        //Sets the customer's time needed to wait to that total waiting time
                     registers[shortestLineIndex].Enqueue(tempEvent.Customer);               //Add the customer to the shortest line
 
-                    TimeSpan custExitTime = new TimeSpan(0, (int)(tempEvent.Customer.ArrivalTime.TotalMinutes + tempEvent.Customer.TimeWaiting), 0);
+                    TimeSpan custExitTime = tempEvent.Customer.ArrivalTime + tempEvent.Customer.TimeWaiting;
+
+                    //If the customer's wait time is less than the shortest wait time, then set it to be the shotest wait time.
+                    shortestServiceTime = (tempEvent.Customer.TimeWaiting < shortestServiceTime) ? tempEvent.Customer.TimeWaiting : shortestServiceTime;
+                    //If the customer's wait time is longer than the longest wait time, then set it to be the longest wait time.
+                    longestServiceTime = (tempEvent.Customer.TimeWaiting > longestServiceTime) ? tempEvent.Customer.TimeWaiting : longestServiceTime;
+
+                    //Add the customer's wait time to the total service time
+                    totalServiceTime += tempEvent.Customer.TimeWaiting;
 
                     PQ.Enqueue(new Event(EVENTTYPE.LEAVE, tempEvent.Customer, custExitTime));
                     PQ.Dequeue();       //Then remove that customer's arrival from the priority Queue
+                    arrivals++;         //Increment Arrivals
+                    lblArrivals.Text = String.Format("Arrivals: {0}", arrivals.ToString());
                 }
 
                 //Handles the exit event by finding where the person is and removing them from their line
@@ -153,32 +179,28 @@ namespace SupermarketSimulation
                             if (registers[count].Peek().CustomerID == tempEvent.Customer.CustomerID)
                             {
                                 //Subtract the customer to be dequeued's TimeToServe from the Waiting time for that line
-                                WaitingTime[count] -= registers[count].Peek().TimeToServe.TotalMinutes;
+                                WaitingTime[count] -= registers[count].Peek().TimeToServe;
                                 registers[count].Dequeue();     //Remove the customer from that line
                             }
                         }
                     PQ.Dequeue();       //Then remove that customer's Exit from the priority Queue
+                    departures++;       //Increment departures
+                    lblDepartures.Text = String.Format("Departures: {0}", departures.ToString());
                 }
+                
+                eventsProcessed++;
+                lblEvents.Text = String.Format("Events Processed: {0}",eventsProcessed.ToString());
+                GetLongestQueue();
 
-                //int leaveIndex = 0;
-                //double shortestTime = registers[0].Peek().ArrivalTime.TotalMinutes + registers[0].Peek().TimeToServe.TotalMinutes;
-
-                //for(int i = 0; i < registers.Count - 1; i++)
-                //{
-                //    if (registers[i].Count > 0)
-                //    leaveIndex = (registers[i].Peek().ArrivalTime.TotalMinutes + (WaitingTime[i] - registers[i].Peek().TimeWaiting) < shortestTime) ? i : leaveIndex;
-                    
-                //}
-                // TimeSpan exitTime = new TimeSpan(0,(int)(registers[leaveIndex].Peek().ArrivalTime.TotalMinutes + (WaitingTime[leaveIndex] - registers[leaveIndex].Peek().TimeWaiting)), 0);
-
-                //PQ.Enqueue(new Event(EVENTTYPE.LEAVE, registers[leaveIndex].Peek(),exitTime));
-                //registers[leaveIndex].Dequeue();
-
-                eventsProcessed += 1;
-                lblEvents.Text = eventsProcessed.ToString();
-                Task.Delay(10000);
+                //Replace 1000 with a variable from a slider control
+                Task.Delay(100).Wait();
 
             }
+
+            averageServiceTime = new TimeSpan(0, (int)(totalServiceTime.TotalMinutes / numCustomers), 0);
+            lblAvgWait.Text = String.Format("Average Time To be Serviced: {0}", averageServiceTime.ToString());
+            lblShortestWait.Text = String.Format("Shortest Wait: {0}", shortestServiceTime.ToString());
+            lblLongestWait.Text = String.Format("Longest Wait: {0}", longestServiceTime.ToString());
         }
 
         /// <summary>
@@ -207,6 +229,41 @@ namespace SupermarketSimulation
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Method that loops through the registers and sets the longestQueue to the longest current queue;
+        /// </summary>
+        private void GetLongestQueue()
+        {
+            foreach(var line in registers)
+            {
+                longestQueue = (line.Count > longestQueue) ? line.Count : longestQueue;
+            }
+
+            lblLongestQueue.Text = String.Format("Longest Queue Encountered: {0}", longestQueue.ToString());
+            
+        }
+
+        /// <summary>
+        /// Resets Statistics and stats labels
+        /// </summary>
+        private void ResetStats()
+        {
+            arrivals = 0;
+            lblArrivals.Text = "Arrivals: ";
+            departures = 0;
+            lblDepartures.Text = "Departures: ";
+            eventsProcessed = 0;
+            lblEvents.Text = "Events Processed: ";
+            longestQueue = 0;
+            lblLongestQueue.Text = "Longest Queue Encountered: ";
+            shortestServiceTime = new TimeSpan();
+            longestServiceTime = new TimeSpan();
+            averageServiceTime = new TimeSpan();
+            lblAvgWait.Text = "Average Time To be Serviced: ";
+            lblShortestWait.Text = "Shortest Wait: " ;
+            lblLongestWait.Text = "Longest Wait: ";
         }
     
     

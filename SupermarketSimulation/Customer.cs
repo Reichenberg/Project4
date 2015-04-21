@@ -30,7 +30,7 @@ namespace SupermarketSimulation
         /// <summary>
         /// Variable for maintaining time spent waiting in the register's line 
         /// </summary>
-        public double TimeWaiting { get; set; }
+        public TimeSpan TimeWaiting { get; set; }
 
         /// <summary>
         /// Time of Arrival of customer
