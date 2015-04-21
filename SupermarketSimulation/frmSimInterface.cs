@@ -27,7 +27,6 @@ namespace SupermarketSimulation
     /// </summary>
     public partial class frmSimInterface : Form
     {
-
         Random rand = new Random();
         //Priority Queue to manage events
         PriorityQueue<Event> PQ = new PriorityQueue<Event>();
@@ -135,7 +134,7 @@ namespace SupermarketSimulation
         /// <summary>
         /// Method that runs the Supermarket Simulation
         /// </summary>
-        private async void RunSimulation()
+        private async Task<int> RunSimulation()
         {
             shortestServiceTime = PQ.Peek().Customer.TimeToServe;
             longestServiceTime = PQ.Peek().Customer.TimeToServe;
@@ -208,13 +207,51 @@ namespace SupermarketSimulation
                 eventsProcessed++;
                 lblEvents.Text = String.Format("Events Processed: {0}",eventsProcessed.ToString());
                 GetLongestQueue();
-                txtSimulationVisual.Text = await DisplayRegisters();
+                int n = await VisualizeData();
             }
 
             averageServiceTime = new TimeSpan(0, (int)(totalServiceTime.TotalMinutes / numCustomers), 0);
             lblAvgWait.Text = String.Format("Average Time To be Serviced: {0}", averageServiceTime.ToString());
             lblShortestWait.Text = String.Format("Shortest Wait: {0}", shortestServiceTime.ToString());
             lblLongestWait.Text = String.Format("Longest Wait: {0}", longestServiceTime.ToString());
+            return 1;
+        }
+
+        public async Task<int> VisualizeData()
+        {
+            string str = "";
+            int biggest = 0;
+            List<Queue<Customer>> RegisterCopy = registers;
+            str += "Registers\r\n---------\r\n";
+            for (int i = 0; i < registers.Count; i++)
+            {
+                str += "R " + i + "    ";
+            }
+            str += "\r\n";
+
+            for (int j = 0; j < registers.Count; j++)
+            {
+                if (registers[j].Count > registers[biggest].Count)
+                {
+                    biggest = j;
+                }
+            }
+
+            for (int l = 0; l < registers[biggest].Count; l++)
+            {
+                foreach (Queue<Customer> q in RegisterCopy)
+                {
+                    if (q.Count > 0)
+                    {
+                        str += q.Dequeue().CustomerID + "    ";
+                    }
+
+                }
+            }
+            str += "\r\n";
+            int n = await Wait();
+            txtSimulationVisual.Text = str;
+            return 1;
         }
 
         /// <summary>
@@ -279,29 +316,11 @@ namespace SupermarketSimulation
             lblShortestWait.Text = "Shortest Wait: " ;
             lblLongestWait.Text = "Longest Wait: ";
         }
-
-        public async Task<string> DisplayRegisters()
+        
+        public async Task<int> Wait()
         {
-            string str = "";
-            List<List<Customer>> ToList = new List<List<Customer>>();
-            int i = 0;
-            foreach(Queue<Customer> q in registers)
-            {
-                ToList[i] = new List<Customer>(registers[i]);
-                i++;
-            }
-
-            for (int j = 0; j <= ToList[0].Count; j++)
-            {
-                foreach (List<Customer> l in ToList)
-                {
-                    str += "R " + j + 1 + "\r\n";
-                    str += l[j].CustomerID + "         ";
-                }
-                str += "\r\n";
-            }
-            await Task.Delay(1000);
-            return str;
+            await Task.Delay(500);
+            return 1;
         }
 
     
