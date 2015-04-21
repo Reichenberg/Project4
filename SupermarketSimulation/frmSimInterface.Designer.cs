@@ -50,6 +50,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtCheckoutDurationSeconds = new System.Windows.Forms.TextBox();
+            this.SimulationSpeed = new System.Windows.Forms.TrackBar();
+            this.lblSpeed = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -238,11 +241,33 @@
             this.txtCheckoutDurationSeconds.TabIndex = 20;
             this.txtCheckoutDurationSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
+            // SimulationSpeed
+            // 
+            this.SimulationSpeed.Location = new System.Drawing.Point(240, 262);
+            this.SimulationSpeed.Minimum = 1;
+            this.SimulationSpeed.Name = "SimulationSpeed";
+            this.SimulationSpeed.Size = new System.Drawing.Size(104, 45);
+            this.SimulationSpeed.TabIndex = 21;
+            this.SimulationSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.SimulationSpeed.Value = 5;
+            this.SimulationSpeed.Scroll += new System.EventHandler(this.SimulationSpeed_Scroll);
+            this.SimulationSpeed.ValueChanged += new System.EventHandler(this.SimulationSpeed_Scroll);
+            // 
+            // lblSpeed
+            // 
+            this.lblSpeed.AutoSize = true;
+            this.lblSpeed.Location = new System.Drawing.Point(272, 246);
+            this.lblSpeed.Name = "lblSpeed";
+            this.lblSpeed.Size = new System.Drawing.Size(0, 13);
+            this.lblSpeed.TabIndex = 22;
+            // 
             // frmSimInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 311);
+            this.Controls.Add(this.lblSpeed);
+            this.Controls.Add(this.SimulationSpeed);
             this.Controls.Add(this.txtCheckoutDurationSeconds);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -270,6 +295,7 @@
             this.MinimumSize = new System.Drawing.Size(750, 350);
             this.Name = "frmSimInterface";
             this.Text = "Supermarket Simulator";
+            ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +324,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtCheckoutDurationSeconds;
+        private System.Windows.Forms.TrackBar SimulationSpeed;
+        private System.Windows.Forms.Label lblSpeed;
     }
 }
 

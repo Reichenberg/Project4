@@ -39,14 +39,12 @@ namespace SupermarketSimulation
         int numRegisters = 5;
         int expectedCheckoutDurationMin = 6;
         int expectedCheckoutDurationSeconds = 15;
-        bool threadFinished = false;
-        System.Timers.Timer timer; 
+        int TimeInterval;
 
         //Statistics variables
         int eventsProcessed, arrivals, departures;
         int longestQueue = 0;
         TimeSpan shortestServiceTime, longestServiceTime, averageServiceTime, totalServiceTime;
-        string TxtOutput = "Registers\r\n---------\r\n\r\n"; 
         TimeSpan[] WaitingTime;
         
 
@@ -56,7 +54,8 @@ namespace SupermarketSimulation
         public frmSimInterface()
         {
             InitializeComponent();
-            timer = new System.Timers.Timer();
+            TimeInterval = SimulationSpeed.Value;
+            lblSpeed.Text = SimulationSpeed.Value.ToString();
         }
 
         /// <summary>
@@ -221,17 +220,21 @@ namespace SupermarketSimulation
         {
             string str = "";
             int biggest = 0;
-            List<Queue<Customer>> RegisterCopy = registers;
+            List<Queue<Customer>> RegisterCopy = new List<Queue<Customer>>();
+            foreach (Queue<Customer> q in registers)
+            {
+                RegisterCopy.Add(new Queue<Customer>(q.ToList()));
+            }
             str += "Registers\r\n---------\r\n";
             for (int i = 0; i < registers.Count; i++)
             {
-                str += "R " + i + "    ";
+                str += "R " + i + "        ";
             }
             str += "\r\n";
 
             for (int j = 0; j < registers.Count; j++)
             {
-                if (registers[j].Count > registers[biggest].Count)
+                if (registers[j].Count-1 > registers[biggest].Count-1)
                 {
                     biggest = j;
                 }
@@ -246,9 +249,15 @@ namespace SupermarketSimulation
                         str += q.Dequeue().CustomerID + "    ";
                     }
 
+                    else
+                    {
+                        str += "           ";
+                    }
+
                 }
+                str += "\r\n";
             }
-            str += "\r\n";
+            
             int n = await Wait();
             txtSimulationVisual.Text = str;
             return 1;
@@ -319,8 +328,15 @@ namespace SupermarketSimulation
         
         public async Task<int> Wait()
         {
-            await Task.Delay(500);
+            await Task.Delay(TimeInterval);
             return 1;
+        }
+
+        private void SimulationSpeed_Scroll(object sender, EventArgs e)
+        {
+            TimeInterval = (10 - SimulationSpeed.Value) * 1000;
+            lblSpeed.Text = SimulationSpeed.Value.ToString();
+
         }
 
     
