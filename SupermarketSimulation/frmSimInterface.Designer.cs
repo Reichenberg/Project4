@@ -246,19 +246,20 @@
             // SimulationSpeed
             // 
             this.SimulationSpeed.Location = new System.Drawing.Point(240, 262);
+            this.SimulationSpeed.Maximum = 100;
             this.SimulationSpeed.Minimum = 1;
             this.SimulationSpeed.Name = "SimulationSpeed";
             this.SimulationSpeed.Size = new System.Drawing.Size(104, 45);
             this.SimulationSpeed.TabIndex = 21;
             this.SimulationSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.SimulationSpeed.Value = 5;
+            this.SimulationSpeed.Value = 50;
             this.SimulationSpeed.Scroll += new System.EventHandler(this.SimulationSpeed_Scroll);
             this.SimulationSpeed.ValueChanged += new System.EventHandler(this.SimulationSpeed_Scroll);
             // 
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(272, 246);
+            this.lblSpeed.Location = new System.Drawing.Point(234, 262);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(0, 13);
             this.lblSpeed.TabIndex = 22;
@@ -267,7 +268,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.ClientSize = new System.Drawing.Size(734, 312);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.SimulationSpeed);
             this.Controls.Add(this.txtCheckoutDurationSeconds);

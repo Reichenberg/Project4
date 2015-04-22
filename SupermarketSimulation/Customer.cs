@@ -40,7 +40,7 @@ namespace SupermarketSimulation
         /// <summary>
         /// Time required to serve customer 
         /// </summary>
-        public TimeSpan TimeToServe { get; private set; }
+        public TimeSpan TimeToServe { get; set; }
 
         /// <summary>
         /// default constructor for Customer class
