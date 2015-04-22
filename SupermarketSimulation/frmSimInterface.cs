@@ -63,7 +63,7 @@ namespace SupermarketSimulation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnRun_Click(object sender, EventArgs e)
+        private async void btnRun_Click(object sender, EventArgs e)
         {
             ResetStats();
 
@@ -82,7 +82,7 @@ namespace SupermarketSimulation
                  registers.Add(new Queue<Customer>());
              }
                  GenerateCustomerArrivals();
-              RunSimulation();
+              int n = await RunSimulation();
              
         }
 
@@ -239,10 +239,13 @@ namespace SupermarketSimulation
             str += "Registers\r\n---------\r\n";
             for (int i = 0; i < registers.Count; i++)
             {
-                if (i > 0)
-                    tempstr += "   ";
-                tempstr = "|--R " + i + "--|  "  ;
-                tempstr.PadLeft(5);
+                tempstr += "-----";
+            }
+            str+=tempstr + "\r\n";
+            for (int i = 0; i < registers.Count; i++)
+            {
+                tempstr = " R " + i + " |"  ;
+                tempstr = String.Format("{0,5}", tempstr);
                 str += tempstr; 
             }
             str += "\r\n";
@@ -261,7 +264,7 @@ namespace SupermarketSimulation
                 {
                     if (q.Count > 0)
                     {
-                        tempstr = " " + q.Dequeue().CustomerID.ToString() + "    ";
+                        tempstr = string.Format("{0,5}", q.Dequeue().CustomerID.ToString());
                         str+=tempstr;
 
                     }
@@ -384,6 +387,11 @@ namespace SupermarketSimulation
             //Add the customer's wait time to the total service time
             totalServiceTime += cust.TimeToServe;
             PQ.Enqueue(new Event(EVENTTYPE.LEAVE, cust, custExitTime));
+        }
+
+        private void txtSimulationVisual_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
     
