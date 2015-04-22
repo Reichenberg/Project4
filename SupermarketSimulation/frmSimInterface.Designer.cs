@@ -145,6 +145,7 @@
             // 
             // txtSimulationVisual
             // 
+            this.txtSimulationVisual.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSimulationVisual.Location = new System.Drawing.Point(358, 12);
             this.txtSimulationVisual.Multiline = true;
             this.txtSimulationVisual.Name = "txtSimulationVisual";

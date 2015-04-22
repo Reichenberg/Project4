@@ -222,33 +222,59 @@ namespace SupermarketSimulation
             return 1;
         }
 
-        /// <summary>                                                   //DUUNNCANNNN!!! just trying to get your attention.
-        /// Creates the Psuedo-Graphical View of the simulation         //Try something like String.Format("{0,5}", customer.ID);
-        /// </summary>                                                  //That will allocate 5 characters for that item and will help you 
-        /// <returns>1 for done</returns>                               //better align the registers and their customers.
+        /// <summary>                                                
+        /// Creates the Psuedo-Graphical View of the simulation      
+        /// </summary>                                               
+        /// <returns>1 for done</returns>                            
         public async Task<int> VisualizeData()
         {
             string str = "";
             string tempstr = "";
             int biggest = 0;
             List<Queue<Customer>> RegisterCopy = new List<Queue<Customer>>();
+            int StringLength = 7;
             foreach (Queue<Customer> q in registers)
             {
                 RegisterCopy.Add(new Queue<Customer>(q.ToList()));
             }
-            str += "Registers\r\n---------\r\n";
-            for (int i = 0; i < registers.Count; i++)
+            int TitleSpot = ((registers.Count*StringLength) / 2) - 4;
+            for (int i = 0; i < TitleSpot; i++)
             {
-                tempstr += "-----";
+                str += " ";
             }
-            str+=tempstr + "\r\n";
-            for (int i = 0; i < registers.Count; i++)
+            str += "Registers\r\n";
+
+            for (int i = 0; i < registers.Count * StringLength; i++)
             {
-                tempstr = " R " + i + " |"  ;
-                tempstr = String.Format("{0,5}", tempstr);
-                str += tempstr; 
+                str += "-";
             }
             str += "\r\n";
+            int RegisterIndex = 0;
+            for (int i = 0; i < registers.Count; i++)
+            {
+                string SpacesString = "";
+                tempstr = "R " + i  ;
+                if (tempstr.Length < StringLength)
+                {
+                    int NewSpaces = (StringLength - tempstr.Length);
+                    for (int k = 0; k < NewSpaces-1; k++)
+                    {
+                        SpacesString += " ";
+                    }
+                    SpacesString += "|";
+ 
+                }
+                tempstr += SpacesString;
+                str += tempstr;
+                RegisterIndex++;
+            }
+            str += "\r\n";
+            for (int i = 0; i < RegisterIndex*StringLength; i++)
+            {
+                str += "-";
+            }
+
+                str += "\r\n";
 
             for (int j = 0; j < registers.Count; j++)
             {
@@ -264,14 +290,30 @@ namespace SupermarketSimulation
                 {
                     if (q.Count > 0)
                     {
-                        tempstr = string.Format("{0,5}", q.Dequeue().CustomerID.ToString());
+                        string SpacesString = "";
+                        tempstr = q.Dequeue().CustomerID.ToString();
+                        if (tempstr.Length < StringLength)
+                        {
+                            
+                            int NewSpaces = (StringLength - tempstr.Length);
+                            for (int i = 0; i < NewSpaces-1; i++)
+                            {
+                                SpacesString += " ";
+                            }
+                            SpacesString += "|";
+                        }
+                        tempstr += SpacesString;
                         str+=tempstr;
 
                     }
 
                     else
                     {
-                        str += "     ";
+                        for (int i = 0; i < StringLength-1; i++)
+                        {
+                            str += " ";
+                        }
+                        str += "|";
 
                     }
 
