@@ -65,14 +65,25 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private async void btnRun_Click(object sender, EventArgs e)
         {
-            ResetStats();
+            
 
-             numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
-             hoursOfOperation = int.Parse(txtHours.Text);
-             numRegisters = int.Parse(txtRegisters.Text);
-             WaitingTime = new TimeSpan[numRegisters];
-             expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
-             expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
+            if (!String.IsNullOrEmpty(txtCustomers.Text) && !String.IsNullOrEmpty(txtHours.Text) && !String.IsNullOrEmpty(txtRegisters.Text) && !String.IsNullOrEmpty(txtCheckoutDurationMinutes.Text) && !String.IsNullOrEmpty(txtCheckoutDurationSeconds.Text))
+            {
+                ToggleControls();
+                ResetStats();
+
+                numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
+                hoursOfOperation = int.Parse(txtHours.Text);
+                numRegisters = int.Parse(txtRegisters.Text);
+                WaitingTime = new TimeSpan[numRegisters];
+                expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
+                expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
+            }
+            else
+            {
+                MessageBox.Show("All fields must be filled. Please enter data into the fields.");
+                return;
+            }
 
              registers = new List<Queue<Customer>>();
 
@@ -86,9 +97,6 @@ namespace SupermarketSimulation
              
         }
 
-        private void ToTextString(List<Queue<Customer>> List) { 
-
-        }
 
         /// <summary>
         /// Negative exponential distribution generator method
@@ -219,6 +227,7 @@ namespace SupermarketSimulation
             lblAvgWait.Text = String.Format("Average Wait Time: {0}", averageServiceTime.ToString());
             lblShortestWait.Text = String.Format("Shortest Wait: {0}", shortestServiceTime.ToString());
             lblLongestWait.Text = String.Format("Longest Wait: {0}", longestServiceTime.ToString());
+            ToggleControls();
             return 1;
         }
 
@@ -389,9 +398,17 @@ namespace SupermarketSimulation
             PQ.Enqueue(new Event(EVENTTYPE.LEAVE, cust, custExitTime));
         }
 
-        private void txtSimulationVisual_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Toggles the Enabled property for the user controls
+        /// </summary>
+        private void ToggleControls()
         {
-
+            btnRun.Enabled = !btnRun.Enabled;
+            txtCheckoutDurationMinutes.Enabled = !txtCheckoutDurationMinutes.Enabled;
+            txtCheckoutDurationSeconds.Enabled = !txtCheckoutDurationSeconds.Enabled;
+            txtCustomers.Enabled = !txtCustomers.Enabled;
+            txtHours.Enabled = !txtHours.Enabled;
+            txtRegisters.Enabled = !txtRegisters.Enabled;
         }
 
     
