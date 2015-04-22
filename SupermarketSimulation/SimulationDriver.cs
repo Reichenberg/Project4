@@ -4,7 +4,7 @@
 //	File Name:		SimulationDriver.cs
 //	Description:    Driver for the Supermarket Simulation program
 //	Course:			CSCI 2210-001 - Data Structures
-//	Author:			Chance Reichenberg, reichenberg@etsu.edu, Department of Computing, East Tennessee State University
+//	Author:			Chance Reichenberg, reichenberg@etsu.edu, Duncan Perkins, perkinsdt@goldmail.etsu.edu, Department of Computing, East Tennessee State University
 //	Created:	    Friday, April 10, 2015
 //	Copyright:		Chance Reichenberg, 2015
 //
