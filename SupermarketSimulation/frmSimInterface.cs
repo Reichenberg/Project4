@@ -54,8 +54,7 @@ namespace SupermarketSimulation
         public frmSimInterface()
         {
             InitializeComponent();
-            TimeInterval = SimulationSpeed.Value * 100;
-            lblSpeed.Text = SimulationSpeed.Value.ToString();
+            TimeInterval = 1100;
         }
 
         /// <summary>
@@ -237,28 +236,46 @@ namespace SupermarketSimulation
         /// <returns>1 for done</returns>                            
         public async Task<int> VisualizeData()
         {
+            //Final string to be displayed in the GUI
             string str = "";
+
+            //Temporary string for use in the methods
             string tempstr = "";
+
+            //index of the longest current register
             int biggest = 0;
+
+            //Copy of the register List
             List<Queue<Customer>> RegisterCopy = new List<Queue<Customer>>();
             int StringLength = 7;
+
+            //Deep copy the registers queue 
             foreach (Queue<Customer> q in registers)
             {
                 RegisterCopy.Add(new Queue<Customer>(q.ToList()));
             }
+
+            //Where the "Registers" title should be placed on the screen
             int TitleSpot = ((registers.Count*StringLength) / 2) - 4;
+
+            //Do the placing
             for (int i = 0; i < TitleSpot; i++)
             {
                 str += " ";
             }
             str += "Registers\r\n";
 
+            //Print line of dashes for readability
             for (int i = 0; i < registers.Count * StringLength; i++)
             {
                 str += "-";
             }
             str += "\r\n";
+
+            //variable for number of registers inputted by user
             int RegisterIndex = 0;
+
+            //print out Register lines
             for (int i = 0; i < registers.Count; i++)
             {
                 string SpacesString = "";
@@ -277,6 +294,8 @@ namespace SupermarketSimulation
                 str += tempstr;
                 RegisterIndex++;
             }
+
+            //Add another line of dashes for readability
             str += "\r\n";
             for (int i = 0; i < RegisterIndex*StringLength; i++)
             {
@@ -285,6 +304,7 @@ namespace SupermarketSimulation
 
                 str += "\r\n";
 
+            //Determine the longest Register
             for (int j = 0; j < registers.Count; j++)
             {
                 if (registers[j].Count-1 > registers[biggest].Count-1)
@@ -293,10 +313,13 @@ namespace SupermarketSimulation
                 }
             }
 
+            //Print out either the customer ID of the current place in line,
+            //Or print out spaces if no one is in line at the current position
             for (int l = 0; l < registers[biggest].Count; l++)
             {
                 foreach (Queue<Customer> q in RegisterCopy)
                 {
+                    //If there are customers in the queue 
                     if (q.Count > 0)
                     {
                         string SpacesString = "";
@@ -316,6 +339,7 @@ namespace SupermarketSimulation
 
                     }
 
+                    //if there aren't any customers in the queue 
                     else
                     {
                         for (int i = 0; i < StringLength-1; i++)
@@ -330,7 +354,10 @@ namespace SupermarketSimulation
                 str += "\r\n";
             }
             
+            //Delay so the gui isn't instantly at the end
             int n = await Wait();
+
+            //update GUI string
             txtSimulationVisual.Text = str;
             return 1;
         }
@@ -397,6 +424,7 @@ namespace SupermarketSimulation
             lblAvgWait.Text = "Average Time To be Serviced: ";
             lblShortestWait.Text = "Shortest Wait: " ;
             lblLongestWait.Text = "Longest Wait: ";
+
         }
         
         /// <summary>
@@ -416,8 +444,8 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private void SimulationSpeed_Scroll(object sender, EventArgs e)
         {
-            TimeInterval = SimulationSpeed.Value * 100;
-            lblSpeed.Text = SimulationSpeed.Value.ToString();
+            TimeInterval = (100 - SimulationSpeed.Value) * 100;
+            lblSpeed.Text =  TimeInterval.ToString() + " Millisecond Delay";
 
         }
 
@@ -451,6 +479,11 @@ namespace SupermarketSimulation
             txtCustomers.Enabled = !txtCustomers.Enabled;
             txtHours.Enabled = !txtHours.Enabled;
             txtRegisters.Enabled = !txtRegisters.Enabled;
+        }
+
+        private void frmSimInterface_Load(object sender, EventArgs e)
+        {
+
         }
 
     

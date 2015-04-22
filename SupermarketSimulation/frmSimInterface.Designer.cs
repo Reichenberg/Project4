@@ -253,7 +253,7 @@
             this.SimulationSpeed.Size = new System.Drawing.Size(104, 45);
             this.SimulationSpeed.TabIndex = 21;
             this.SimulationSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.SimulationSpeed.Value = 10;
+            this.SimulationSpeed.Value = 89;
             this.SimulationSpeed.Scroll += new System.EventHandler(this.SimulationSpeed_Scroll);
             this.SimulationSpeed.ValueChanged += new System.EventHandler(this.SimulationSpeed_Scroll);
             // 
@@ -262,14 +262,15 @@
             this.lblSpeed.AutoSize = true;
             this.lblSpeed.Location = new System.Drawing.Point(237, 246);
             this.lblSpeed.Name = "lblSpeed";
-            this.lblSpeed.Size = new System.Drawing.Size(0, 13);
+            this.lblSpeed.Size = new System.Drawing.Size(116, 13);
             this.lblSpeed.TabIndex = 22;
+            this.lblSpeed.Text = "1100 Millisecond Delay";
             // 
             // frmSimInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 312);
+            this.ClientSize = new System.Drawing.Size(734, 311);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.SimulationSpeed);
             this.Controls.Add(this.txtCheckoutDurationSeconds);
@@ -299,6 +300,7 @@
             this.MinimumSize = new System.Drawing.Size(750, 350);
             this.Name = "frmSimInterface";
             this.Text = "Supermarket Simulator";
+            this.Load += new System.EventHandler(this.frmSimInterface_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
