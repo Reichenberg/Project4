@@ -154,7 +154,6 @@
             this.txtSimulationVisual.Size = new System.Drawing.Size(364, 165);
             this.txtSimulationVisual.TabIndex = 10;
             this.txtSimulationVisual.WordWrap = false;
-            this.txtSimulationVisual.TextChanged += new System.EventHandler(this.txtSimulationVisual_TextChanged);
             // 
             // lblArrivals
             // 
@@ -242,7 +241,7 @@
             this.txtCheckoutDurationSeconds.Location = new System.Drawing.Point(240, 128);
             this.txtCheckoutDurationSeconds.Name = "txtCheckoutDurationSeconds";
             this.txtCheckoutDurationSeconds.Size = new System.Drawing.Size(58, 20);
-            this.txtCheckoutDurationSeconds.TabIndex = 20;
+            this.txtCheckoutDurationSeconds.TabIndex = 8;
             this.txtCheckoutDurationSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // SimulationSpeed
@@ -261,7 +260,7 @@
             // lblSpeed
             // 
             this.lblSpeed.AutoSize = true;
-            this.lblSpeed.Location = new System.Drawing.Point(234, 262);
+            this.lblSpeed.Location = new System.Drawing.Point(237, 246);
             this.lblSpeed.Name = "lblSpeed";
             this.lblSpeed.Size = new System.Drawing.Size(0, 13);
             this.lblSpeed.TabIndex = 22;
@@ -270,7 +269,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.ClientSize = new System.Drawing.Size(734, 312);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.SimulationSpeed);
             this.Controls.Add(this.txtCheckoutDurationSeconds);
