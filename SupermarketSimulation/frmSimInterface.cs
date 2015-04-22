@@ -222,6 +222,10 @@ namespace SupermarketSimulation
             return 1;
         }
 
+        /// <summary>                                                   //DUUNNCANNNN!!! just trying to get your attention.
+        /// Creates the Psuedo-Graphical View of the simulation         //Try something like String.Format("{0,5}", customer.ID);
+        /// </summary>                                                  //That will allocate 5 characters for that item and will help you 
+        /// <returns>1 for done</returns>                               //better align the registers and their customers.
         public async Task<int> VisualizeData()
         {
             string str = "";
