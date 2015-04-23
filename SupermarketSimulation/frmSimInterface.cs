@@ -46,7 +46,7 @@ namespace SupermarketSimulation
         int eventsProcessed, arrivals, departures;
         int longestQueue = 0;
         TimeSpan shortestServiceTime, longestServiceTime, averageServiceTime, totalServiceTime;
-        TimeSpan[] WaitingTime;
+        
         
 
         /// <summary>
@@ -65,43 +65,52 @@ namespace SupermarketSimulation
         /// <param name="e"></param>
         private async void btnRun_Click(object sender, EventArgs e)
         {
-            
-            //Make sure none of the fields are empty
-            if (String.IsNullOrEmpty(txtMinimumMinutes.Text) || String.IsNullOrEmpty(txtMinimumSeconds.Text) || String.IsNullOrEmpty(txtCustomers.Text) || String.IsNullOrEmpty(txtHours.Text) || String.IsNullOrEmpty(txtRegisters.Text) || String.IsNullOrEmpty(txtCheckoutDurationMinutes.Text) || String.IsNullOrEmpty(txtCheckoutDurationSeconds.Text))
+            try
             {
-                MessageBox.Show("All fields must be filled. Please enter data into the fields.");
-                return;
-               
-            }   
-            else if(txtCustomers.Text == "0"|| txtHours.Text == "0"|| txtRegisters.Text == "0"|| txtCheckoutDurationMinutes.Text == "0") //Some fields cannot be 0
-            {
-                MessageBox.Show("You cannot enter 0 as a value.");
-                return;
+                //Make sure none of the fields are empty
+                if (String.IsNullOrEmpty(txtMinimumMinutes.Text) || String.IsNullOrEmpty(txtMinimumSeconds.Text) || String.IsNullOrEmpty(txtCustomers.Text) || String.IsNullOrEmpty(txtHours.Text) || String.IsNullOrEmpty(txtRegisters.Text) || String.IsNullOrEmpty(txtCheckoutDurationMinutes.Text) || String.IsNullOrEmpty(txtCheckoutDurationSeconds.Text))
+                {
+                    MessageBox.Show("All fields must be filled. Please enter data into the fields.");
+                    return;
+
+                }
+                else if (Double.Parse(txtCustomers.Text) < 1 || int.Parse(txtHours.Text) < 1 || int.Parse(txtRegisters.Text) < 1 || int.Parse(txtCheckoutDurationMinutes.Text) < 1) //Some fields cannot be 0
+                {
+                    MessageBox.Show("Fields other than 'Expected Minimum Checkout Duration' Cannot be '0'.");
+                    return;
+                }
+                else
+                {
+                    ToggleControls();
+                    ResetStats();
+
+                    numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
+                    hoursOfOperation = int.Parse(txtHours.Text);
+                    numRegisters = int.Parse(txtRegisters.Text);
+                    
+                    expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
+                    expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
+                    expectedMinimumMin = int.Parse(txtMinimumMinutes.Text);
+                    expectedMinimumSeconds = int.Parse(txtMinimumSeconds.Text);
+
+                    pgbSimulationProgress.Maximum = numCustomers;
+                    
+                }
+
+                registers = new List<Queue<Customer>>();
+
+                //Adds a Queue to the list for each register
+                for (int count = 0; count < numRegisters; count++)
+                {
+                    registers.Add(new Queue<Customer>());
+                }
+                GenerateCustomerArrivals();
+                int n = await RunSimulation();
             }
-            else
+            catch( Exception err)
             {
-                ToggleControls();
-                ResetStats();
-
-                numCustomers = PoissonNum(Double.Parse(txtCustomers.Text));
-                hoursOfOperation = int.Parse(txtHours.Text);
-                numRegisters = int.Parse(txtRegisters.Text);
-                WaitingTime = new TimeSpan[numRegisters];
-                expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
-                expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
-                expectedMinimumMin = int.Parse(txtMinimumMinutes.Text);
-                expectedMinimumSeconds = int.Parse(txtMinimumSeconds.Text);
+                MessageBox.Show("There was an error processing your simulation.\n" + err.Message + "\n", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-             registers = new List<Queue<Customer>>();
-
-            //Adds a Queue to the list for each register
-             for (int count = 0; count < numRegisters; count++ )
-             {
-                 registers.Add(new Queue<Customer>());
-             }
-                 GenerateCustomerArrivals();
-              int n = await RunSimulation();
              
         }
 
@@ -199,8 +208,7 @@ namespace SupermarketSimulation
                         {
                             if (registers[count].Peek().CustomerID == tempEvent.Customer.CustomerID)
                             {
-                                //Subtract the customer to be dequeued's TimeToServe from the Waiting time for that line
-                                //WaitingTime[count] -= registers[count].Peek().TimeToServe;
+                                
                                 registers[count].Dequeue();     //Remove the customer from that line
 
                                 PQ.Dequeue();       //Then remove that customer's Exit from the priority Queue
@@ -216,6 +224,7 @@ namespace SupermarketSimulation
 
 
                                 departures++;       //Increment departures
+                                pgbSimulationProgress.Value = departures;
                                 lblDepartures.Text = String.Format("Departures: {0}", departures.ToString());
 
                                 break;
@@ -429,7 +438,7 @@ namespace SupermarketSimulation
             longestServiceTime = new TimeSpan();
             averageServiceTime = new TimeSpan();
             totalServiceTime = new TimeSpan();
-            lblAvgWait.Text = "Average Time To be Serviced: ";
+            lblAvgWait.Text = "Average Wait Time: ";
             lblShortestWait.Text = "Shortest Wait: " ;
             lblLongestWait.Text = "Longest Wait: ";
 
@@ -491,6 +500,19 @@ namespace SupermarketSimulation
             txtMinimumMinutes.Enabled = !txtMinimumMinutes.Enabled;
             txtMinimumSeconds.Enabled = !txtMinimumSeconds.Enabled;
         }
+
+        /// <summary>
+        /// Event method to handle form closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmSimInterface_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MessageBox.Show("Thank you for using the SuperMarket Simulator.", "GoodBye!", MessageBoxButtons.OK);
+
+        }
+
+
 
 
     

@@ -57,6 +57,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtMinimumSeconds = new System.Windows.Forms.TextBox();
+            this.pgbSimulationProgress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -204,9 +205,9 @@
             this.lblLongestQueue.AutoSize = true;
             this.lblLongestQueue.Location = new System.Drawing.Point(355, 218);
             this.lblLongestQueue.Name = "lblLongestQueue";
-            this.lblLongestQueue.Size = new System.Drawing.Size(120, 13);
+            this.lblLongestQueue.Size = new System.Drawing.Size(150, 13);
             this.lblLongestQueue.TabIndex = 14;
-            this.lblLongestQueue.Text = "Longest Queue So Far: ";
+            this.lblLongestQueue.Text = "Longest Queue Encountered: ";
             // 
             // lblAvgWait
             // 
@@ -333,11 +334,20 @@
             this.txtMinimumSeconds.Text = "0";
             this.txtMinimumSeconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // pgbSimulationProgress
+            // 
+            this.pgbSimulationProgress.BackColor = System.Drawing.Color.Chocolate;
+            this.pgbSimulationProgress.Location = new System.Drawing.Point(12, 306);
+            this.pgbSimulationProgress.Name = "pgbSimulationProgress";
+            this.pgbSimulationProgress.Size = new System.Drawing.Size(710, 25);
+            this.pgbSimulationProgress.TabIndex = 28;
+            // 
             // frmSimInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 312);
+            this.ClientSize = new System.Drawing.Size(734, 337);
+            this.Controls.Add(this.pgbSimulationProgress);
             this.Controls.Add(this.txtMinimumSeconds);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -368,11 +378,12 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(750, 350);
-            this.MinimumSize = new System.Drawing.Size(750, 350);
+            this.MaximumSize = new System.Drawing.Size(750, 375);
+            this.MinimumSize = new System.Drawing.Size(750, 375);
             this.Name = "frmSimInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Supermarket Simulator";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmSimInterface_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -409,6 +420,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtMinimumSeconds;
+        private System.Windows.Forms.ProgressBar pgbSimulationProgress;
     }
 }
 
