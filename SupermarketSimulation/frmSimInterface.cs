@@ -167,13 +167,16 @@ namespace SupermarketSimulation
                     //Gets the index of the shortest line to be checked out
                     for(int i = 0; i < registers.Count; i++)
                     {
-                        shortestLineIndex = (registers[i].Count < lineLength) ? i : shortestLineIndex;
+                        if(registers[i].Count < lineLength)
+                        {
+                            lineLength = registers[i].Count;
+                            shortestLineIndex = i;
+                        }
+                        
+
+                        //shortestLineIndex = (registers[i].Count < lineLength) ? i : shortestLineIndex;
                     }
 
-                    //Sets the current waiting time to the total amoumt of time for
-                    //each person to make it through the line
-                    //WaitingTime[shortestLineIndex] += tempEvent.Customer.TimeToServe;
-                    //tempEvent.Customer.TimeWaiting = WaitingTime[shortestLineIndex];        //Sets the customer's time needed to wait to that total waiting time
                     registers[shortestLineIndex].Enqueue(tempEvent.Customer);               //Add the customer to the shortest line
 
                     PQ.Dequeue();       //Then remove that customer's arrival from the priority Queue
@@ -358,12 +361,12 @@ namespace SupermarketSimulation
                 }
                 str += "\r\n";
             }
-            
+            //update GUI string
+            txtSimulationVisual.Text = str;
             //Delay so the gui isn't instantly at the end
             int n = await Wait();
 
-            //update GUI string
-            txtSimulationVisual.Text = str;
+            
             return 1;
         }
 
