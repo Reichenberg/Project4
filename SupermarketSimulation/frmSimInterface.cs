@@ -40,6 +40,7 @@ namespace SupermarketSimulation
         int expectedCheckoutDurationMin = 6;
         int expectedCheckoutDurationSeconds = 15;
         int TimeInterval;
+        int expectedMinimumMin, expectedMinimumSeconds;
 
         //Statistics variables
         int eventsProcessed, arrivals, departures;
@@ -65,8 +66,19 @@ namespace SupermarketSimulation
         private async void btnRun_Click(object sender, EventArgs e)
         {
             
-
-            if (!String.IsNullOrEmpty(txtCustomers.Text) && !String.IsNullOrEmpty(txtHours.Text) && !String.IsNullOrEmpty(txtRegisters.Text) && !String.IsNullOrEmpty(txtCheckoutDurationMinutes.Text) && !String.IsNullOrEmpty(txtCheckoutDurationSeconds.Text))
+            //Make sure none of the fields are empty
+            if (String.IsNullOrEmpty(txtMinimumMinutes.Text) || String.IsNullOrEmpty(txtMinimumSeconds.Text) || String.IsNullOrEmpty(txtCustomers.Text) || String.IsNullOrEmpty(txtHours.Text) || String.IsNullOrEmpty(txtRegisters.Text) || String.IsNullOrEmpty(txtCheckoutDurationMinutes.Text) || String.IsNullOrEmpty(txtCheckoutDurationSeconds.Text))
+            {
+                MessageBox.Show("All fields must be filled. Please enter data into the fields.");
+                return;
+               
+            }   
+            else if(txtCustomers.Text == "0"|| txtHours.Text == "0"|| txtRegisters.Text == "0"|| txtCheckoutDurationMinutes.Text == "0") //Some fields cannot be 0
+            {
+                MessageBox.Show("You cannot enter 0 as a value.");
+                return;
+            }
+            else
             {
                 ToggleControls();
                 ResetStats();
@@ -77,11 +89,8 @@ namespace SupermarketSimulation
                 WaitingTime = new TimeSpan[numRegisters];
                 expectedCheckoutDurationMin = int.Parse(txtCheckoutDurationMinutes.Text);
                 expectedCheckoutDurationSeconds = int.Parse(txtCheckoutDurationSeconds.Text);
-            }
-            else
-            {
-                MessageBox.Show("All fields must be filled. Please enter data into the fields.");
-                return;
+                expectedMinimumMin = int.Parse(txtMinimumMinutes.Text);
+                expectedMinimumSeconds = int.Parse(txtMinimumSeconds.Text);
             }
 
              registers = new List<Queue<Customer>>();
@@ -174,10 +183,6 @@ namespace SupermarketSimulation
                         SetCustomerTimeToServe(registers[shortestLineIndex].Peek());
 
                     }
-                    
-
-
-
                     
                     arrivals++;         //Increment Arrivals
                     lblArrivals.Text = String.Format("Arrivals: {0}", arrivals.ToString());
@@ -455,7 +460,7 @@ namespace SupermarketSimulation
         /// <param name="cust">Customer to be given a Time to be served and added to the Priority Queue</param>
         private void SetCustomerTimeToServe(Customer cust)
         {
-            cust.TimeToServe = new TimeSpan(0, 0, (int)(120 + NegExponentialNum(expectedCheckoutDurationSeconds + (expectedCheckoutDurationMin * 60))));
+            cust.TimeToServe = new TimeSpan(0, 0, (int)((expectedMinimumMin * 60 + expectedMinimumSeconds) + NegExponentialNum(expectedCheckoutDurationSeconds + (expectedCheckoutDurationMin * 60))));
 
             TimeSpan custExitTime = cust.ArrivalTime + cust.TimeToServe;
 
@@ -479,12 +484,10 @@ namespace SupermarketSimulation
             txtCustomers.Enabled = !txtCustomers.Enabled;
             txtHours.Enabled = !txtHours.Enabled;
             txtRegisters.Enabled = !txtRegisters.Enabled;
+            txtMinimumMinutes.Enabled = !txtMinimumMinutes.Enabled;
+            txtMinimumSeconds.Enabled = !txtMinimumSeconds.Enabled;
         }
 
-        private void frmSimInterface_Load(object sender, EventArgs e)
-        {
-
-        }
 
     
     

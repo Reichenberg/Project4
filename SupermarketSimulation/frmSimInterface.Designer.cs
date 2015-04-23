@@ -52,6 +52,11 @@
             this.txtCheckoutDurationSeconds = new System.Windows.Forms.TextBox();
             this.SimulationSpeed = new System.Windows.Forms.TrackBar();
             this.lblSpeed = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtMinimumMinutes = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtMinimumSeconds = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,9 +72,12 @@
             // txtCustomers
             // 
             this.txtCustomers.Location = new System.Drawing.Point(179, 32);
+            this.txtCustomers.MaxLength = 4;
             this.txtCustomers.Name = "txtCustomers";
-            this.txtCustomers.Size = new System.Drawing.Size(100, 20);
+            this.txtCustomers.Size = new System.Drawing.Size(55, 20);
             this.txtCustomers.TabIndex = 1;
+            this.txtCustomers.Text = "600";
+            this.txtCustomers.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCustomers.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // label2
@@ -93,7 +101,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 112);
+            this.label4.Location = new System.Drawing.Point(22, 123);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(150, 13);
             this.label4.TabIndex = 4;
@@ -102,25 +110,34 @@
             // txtHours
             // 
             this.txtHours.Location = new System.Drawing.Point(179, 58);
+            this.txtHours.MaxLength = 4;
             this.txtHours.Name = "txtHours";
-            this.txtHours.Size = new System.Drawing.Size(100, 20);
+            this.txtHours.Size = new System.Drawing.Size(55, 20);
             this.txtHours.TabIndex = 5;
+            this.txtHours.Text = "16";
+            this.txtHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtHours.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // txtRegisters
             // 
             this.txtRegisters.Location = new System.Drawing.Point(179, 83);
+            this.txtRegisters.MaxLength = 4;
             this.txtRegisters.Name = "txtRegisters";
-            this.txtRegisters.Size = new System.Drawing.Size(100, 20);
+            this.txtRegisters.Size = new System.Drawing.Size(55, 20);
             this.txtRegisters.TabIndex = 6;
+            this.txtRegisters.Text = "6";
+            this.txtRegisters.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtRegisters.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // txtCheckoutDurationMinutes
             // 
-            this.txtCheckoutDurationMinutes.Location = new System.Drawing.Point(115, 128);
+            this.txtCheckoutDurationMinutes.Location = new System.Drawing.Point(114, 139);
+            this.txtCheckoutDurationMinutes.MaxLength = 2;
             this.txtCheckoutDurationMinutes.Name = "txtCheckoutDurationMinutes";
-            this.txtCheckoutDurationMinutes.Size = new System.Drawing.Size(58, 20);
+            this.txtCheckoutDurationMinutes.Size = new System.Drawing.Size(46, 20);
             this.txtCheckoutDurationMinutes.TabIndex = 7;
+            this.txtCheckoutDurationMinutes.Text = "6";
+            this.txtCheckoutDurationMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCheckoutDurationMinutes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // btnRun
@@ -151,7 +168,7 @@
             this.txtSimulationVisual.Name = "txtSimulationVisual";
             this.txtSimulationVisual.ReadOnly = true;
             this.txtSimulationVisual.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.txtSimulationVisual.Size = new System.Drawing.Size(364, 165);
+            this.txtSimulationVisual.Size = new System.Drawing.Size(364, 177);
             this.txtSimulationVisual.TabIndex = 10;
             this.txtSimulationVisual.WordWrap = false;
             // 
@@ -221,7 +238,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(62, 131);
+            this.label5.Location = new System.Drawing.Point(61, 142);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 18;
@@ -230,7 +247,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(179, 131);
+            this.label6.Location = new System.Drawing.Point(169, 142);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 19;
@@ -238,16 +255,19 @@
             // 
             // txtCheckoutDurationSeconds
             // 
-            this.txtCheckoutDurationSeconds.Location = new System.Drawing.Point(240, 128);
+            this.txtCheckoutDurationSeconds.Location = new System.Drawing.Point(230, 142);
+            this.txtCheckoutDurationSeconds.MaxLength = 2;
             this.txtCheckoutDurationSeconds.Name = "txtCheckoutDurationSeconds";
-            this.txtCheckoutDurationSeconds.Size = new System.Drawing.Size(58, 20);
+            this.txtCheckoutDurationSeconds.Size = new System.Drawing.Size(46, 20);
             this.txtCheckoutDurationSeconds.TabIndex = 8;
+            this.txtCheckoutDurationSeconds.Text = "15";
+            this.txtCheckoutDurationSeconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCheckoutDurationSeconds.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyValidation_KeyPress);
             // 
             // SimulationSpeed
             // 
             this.SimulationSpeed.Location = new System.Drawing.Point(240, 262);
-            this.SimulationSpeed.Maximum = 100;
+            this.SimulationSpeed.Maximum = 99;
             this.SimulationSpeed.Minimum = 1;
             this.SimulationSpeed.Name = "SimulationSpeed";
             this.SimulationSpeed.Size = new System.Drawing.Size(104, 45);
@@ -266,11 +286,63 @@
             this.lblSpeed.TabIndex = 22;
             this.lblSpeed.Text = "1100 Millisecond Delay";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 162);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(194, 13);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Expected Minimum Checkout Duration: ";
+            // 
+            // txtMinimumMinutes
+            // 
+            this.txtMinimumMinutes.Location = new System.Drawing.Point(114, 180);
+            this.txtMinimumMinutes.MaxLength = 2;
+            this.txtMinimumMinutes.Name = "txtMinimumMinutes";
+            this.txtMinimumMinutes.Size = new System.Drawing.Size(46, 20);
+            this.txtMinimumMinutes.TabIndex = 24;
+            this.txtMinimumMinutes.Text = "2";
+            this.txtMinimumMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(61, 183);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Minutes:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(169, 183);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Seconds: ";
+            // 
+            // txtMinimumSeconds
+            // 
+            this.txtMinimumSeconds.Location = new System.Drawing.Point(230, 180);
+            this.txtMinimumSeconds.MaxLength = 2;
+            this.txtMinimumSeconds.Name = "txtMinimumSeconds";
+            this.txtMinimumSeconds.Size = new System.Drawing.Size(46, 20);
+            this.txtMinimumSeconds.TabIndex = 27;
+            this.txtMinimumSeconds.Text = "0";
+            this.txtMinimumSeconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // frmSimInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 311);
+            this.ClientSize = new System.Drawing.Size(734, 312);
+            this.Controls.Add(this.txtMinimumSeconds);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtMinimumMinutes);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.lblSpeed);
             this.Controls.Add(this.SimulationSpeed);
             this.Controls.Add(this.txtCheckoutDurationSeconds);
@@ -299,8 +371,8 @@
             this.MaximumSize = new System.Drawing.Size(750, 350);
             this.MinimumSize = new System.Drawing.Size(750, 350);
             this.Name = "frmSimInterface";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Supermarket Simulator";
-            this.Load += new System.EventHandler(this.frmSimInterface_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SimulationSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -332,6 +404,11 @@
         private System.Windows.Forms.TextBox txtCheckoutDurationSeconds;
         private System.Windows.Forms.TrackBar SimulationSpeed;
         private System.Windows.Forms.Label lblSpeed;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtMinimumMinutes;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtMinimumSeconds;
     }
 }
 
