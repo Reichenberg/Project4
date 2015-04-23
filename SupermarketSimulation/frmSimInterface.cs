@@ -141,7 +141,7 @@ namespace SupermarketSimulation
         {
             for(int i = 0; i < numCustomers; i++)
             {
-                Customer tempCust = new Customer(i + 1, new TimeSpan(0, rand.Next(hoursOfOperation * 60), 0), new TimeSpan());
+                Customer tempCust = new Customer(i + 1, new TimeSpan(0, 0, rand.Next((hoursOfOperation * 60) * 60)), new TimeSpan());
                 PQ.Enqueue(new Event(EVENTTYPE.ENTER, tempCust, tempCust.ArrivalTime));
             }
         }
@@ -463,7 +463,8 @@ namespace SupermarketSimulation
         /// <param name="cust">Customer to be given a Time to be served and added to the Priority Queue</param>
         private void SetCustomerTimeToServe(Customer cust)
         {
-            cust.TimeToServe = new TimeSpan(0, 0, (int)((expectedMinimumMin * 60 + expectedMinimumSeconds) + NegExponentialNum(expectedCheckoutDurationSeconds + (expectedCheckoutDurationMin * 60))));
+            //Calculate Time to Serve using a negative exponential formula with a minimum value
+            cust.TimeToServe = new TimeSpan(0, 0, (int)((expectedMinimumMin * 60 + expectedMinimumSeconds) + NegExponentialNum((expectedCheckoutDurationSeconds + (expectedCheckoutDurationMin * 60)) - (expectedMinimumMin * 60 + expectedMinimumSeconds))));
 
             TimeSpan custExitTime = cust.ArrivalTime + cust.TimeToServe;
 
