@@ -27,10 +27,19 @@ namespace SupermarketSimulation
     /// </summary>
     class Event : IComparable<Event>
     {
+        /// <summary>
+        /// Property to hold event type
+        /// </summary>
         public EVENTTYPE Type { get; set; }
 
+        /// <summary>
+        /// Property to hold customer object
+        /// </summary>
         public Customer Customer { get; set; }
 
+        /// <summary>
+        /// Property to hold the time of the event to use for comparison
+        /// </summary>
         public TimeSpan EventTime { get; set; }
 
         /// <summary>
